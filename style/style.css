@@ -1,13 +1,63 @@
+
+
 .img-carousel{
-    height:500px;
+    min-height:100px;
+}
+
+#big-text{  
+    position:absolute; 
+    top:20%; 
+    left:20vw;
+}
+
+.big-text-h1{
+    padding:0 20px;
+    background-color:  rgb(255,153,0);
+    color:white
+}
+
+.big-text-p{
+    padding:0 20px;
+    background-color: black;
+    color:white
 }
 
 #order-now{
     background-color: rgb(255,153,0);
     position:absolute; 
-    top:70%; 
-    left:15%;
+    top:50%; 
+    left:20vw;
     padding: 5px 20px;
     border-radius: 20px;
     
 }
+.img-menu{
+    transition: 0.5s;
+}
+.img-menu:hover{
+    background-color:  rgb(255,153,0);
+}
+
+.navi-top{
+    transition: 0.5s
+}
+
+.navi-top:hover{
+    background-color:  rgb(255, 200, 0);
+}
+
+.navi-top:active{
+    background-color:  rgb(255,153,0);
+}
+
+footer{
+    background-color: rgb(100, 100, 100);
+}
+
+/* nav{
+    position:fixed
+} */
+/* main{
+    margin-top:400px;
+    overflow:scroll
+} */
