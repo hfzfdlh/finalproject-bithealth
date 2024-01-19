@@ -42,5 +42,5 @@ const objectNav = {
   todosNav.addEventListener("click", ()=>{
     event.preventDefault()
     switchOn("todos-container")
-    displayTodo()
+    setFilter('all')
   })

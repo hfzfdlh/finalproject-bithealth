@@ -1,26 +1,54 @@
-function displayTodo(){
+function displayTodo(state){
     const todos = JSON.parse(localStorage.getItem('todos'))
 
     let list = ''
-
+    console.log(todos)
     if(todos){
-        todos.forEach(el=> {
-            list += `
-            <tr>
-                <td class="col-1">
-                <input type="checkbox" name="" id="${el.id}" ${el.checked ? 'checked' : ''} onchange="setComplete(this.checked, this.id)">
-                </td>
-                <td class="col-10">
-                <p id="p-${el.id}" style="text-decoration:${el.lineStyle}" >${el.name}</p>
-                </td>
-                <td class="col-1">
-                <button type="button" class="btn btn-danger" id="${el.id}" onclick="deleteTodo(this.id)">Delete</button>
-                </td>
-            </tr>
-            `
-            
-        });
+        if (state == "all"){
+            todos.forEach(el=> {
+                list += `
+                <tr>
+                    <td class="col-1">
+                    <input type="checkbox" name="" id="${el.id}" ${el.checked ? 'checked' : ''} onchange="setComplete(this.checked, this.id)">
+                    </td>
+                    <td class="col-8">
+                    <p id="p-${el.id}" style="text-decoration:${el.lineStyle}" >${el.name}</p>
+                    </td>
+                    <td class="col-2">
+                    <p>${el.tag}</p>
+                    </td>
+                    <td class="col-1">
+                    <button type="button" class="btn btn-danger" id="${el.id}" onclick="deleteTodo(this.id)">Delete</button>
+                    </td>
+                </tr>
+                `
+            });
+        } else{
+            let filterList = todos.filter(el => el.tag == state)
+            console.log(filterList)
+            filterList.forEach(el=> {
+                list += `
+                <tr>
+                    <td class="col-1">
+                    <input type="checkbox" name="" id="${el.id}" ${el.checked ? 'checked' : ''} onchange="setComplete(this.checked, this.id)">
+                    </td>
+                    <td class="col-8">
+                    <p id="p-${el.id}" style="text-decoration:${el.lineStyle}" >${el.name}</p>
+                    </td>
+                    <td class="col-2">
+                    <p>${el.tag}</p>
+                    </td>
+                    <td class="col-1">
+                    <button type="button" class="btn btn-danger" id="${el.id}" onclick="deleteTodo(this.id)">Delete</button>
+                    </td>
+                </tr>
+                `
+            });
+
+        }
+        
     }
+    
 
     document.getElementById('list-todo').innerHTML = list
 }
@@ -28,6 +56,7 @@ function displayTodo(){
 
 function submitTodo() {
     const todo = document.getElementById('add-todo').value
+    const tag = document.getElementById('select-tag').value
 
     let todos = JSON.parse(localStorage.getItem('todos'))
 
@@ -36,19 +65,21 @@ function submitTodo() {
             id: todos[todos.length-1].id + 1,
             name: todo,
             checked: false,
-            lineStyle:"none"
+            lineStyle:"none",
+            tag: tag
         })
     } else{
         todos = [{
             id: 0,
             name: todo,
             checked: false,
-            lineStyle:"none"
+            lineStyle:"none",
+            tag:tag
         }]
     }
     localStorage.setItem('todos', JSON.stringify(todos))
     document.getElementById('add-todo').value = ''
-    displayTodo()
+    displayTodo(localStorage.getItem('tag'))
 }
 
 
@@ -72,7 +103,7 @@ function setComplete(checked,id){
 
     localStorage.setItem('todos', JSON.stringify(newTodos))
 
-    displayTodo()
+    displayTodo(localStorage.getItem('tag'))
 }
 
 function deleteTodo(id){
@@ -86,5 +117,10 @@ function deleteTodo(id){
         localStorage.removeItem('todos')
     }
 
-    displayTodo()
+    displayTodo(localStorage.getItem('tag'))
+}
+
+function setFilter(tag){
+    localStorage.setItem('tag',tag)
+    displayTodo(localStorage.getItem('tag'))
 }
